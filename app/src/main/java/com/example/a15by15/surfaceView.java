@@ -18,7 +18,6 @@ public class surfaceView extends SurfaceView implements View.OnTouchListener {
      * StrategoSurfaceView class
      */
     Bitmap button1 = BitmapFactory.decodeResource(getResources(), R.drawable.button1);
-    Bitmap scaledButton1;
     Bitmap button2 = BitmapFactory.decodeResource(getResources(), R.drawable.button2);
     Bitmap scaledButton2;
     Bitmap button3 = BitmapFactory.decodeResource(getResources(), R.drawable.button3);
@@ -49,7 +48,7 @@ public class surfaceView extends SurfaceView implements View.OnTouchListener {
     Bitmap scaledButton15;
     Bitmap blankButton = BitmapFactory.decodeResource(getResources(), R.drawable.blank);
     Bitmap scaledBlankButton;
-
+    Bitmap scaledButton1;
 
     //grid variables
     private int[][] grid = new int[4][4];
@@ -153,12 +152,14 @@ public class surfaceView extends SurfaceView implements View.OnTouchListener {
                         break;
                     default:
                         drawOn = scaledBlankButton;
+                        break;
 
                 }
-                canvas.drawBitmap(drawOn, (j * height) / 4 + (width - height) / 2, (i * height) / 4, null);
+                canvas.drawBitmap(drawOn, (j * height) / 4 + (width - height) / 4, (i * height) / 4, null);
 
             }
         }
+
 
     }
 
@@ -167,28 +168,32 @@ public class surfaceView extends SurfaceView implements View.OnTouchListener {
         return grid[row][col] != -1;
     }
 
-    public void resetGrid() {
+    public void randomizeGrid() {
 
         //erases board
+        for(int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                grid[i][j] = -1;
+            }
+        }
+        /**
+         * External Citation
+         * Date: November 12, 2019
+         * Problem: forgot how to cast to an int
+         *
+         * Resource: https://alvinalexander.com/java/how-to-round-float-double-to-int-integer-in-java
+         * Solution: followed code to cast to an int
+         */
 
-        int randomize = (int) Math.random() * 4;
+        int randomize = (int)(Math.random() * 4);
         //randomizes numbers within buttons
         for (int i = 1; i < 17; i++) {
-            /**
-             * External Citation
-             * Date: November 12, 2019
-             * Problem: forgot how to cast to an int
-             *
-             * Resource: https://alvinalexander.com/java/how-to-round-float-double-to-int-integer-in-java
-             * Solution: followed code to cast to an int
-             */
 
             int x = randomize;
             int y = randomize;
 
             if (buttonFull(x, y)) {
                 i--;
-                continue;
             } else {
                 grid[x][y] = i;
 
